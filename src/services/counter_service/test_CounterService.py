@@ -14,6 +14,7 @@ class CounterServiceTestCase(unittest.TestCase):
     def test_zz_drop_index(self):
         response = self.service.drop_index()
         print("Service Index Dropped")
+        self.service.es_client.close()
         self.assertEqual(True, response, "Index Dropped")
 
     def test_get_first_time(self):
@@ -45,6 +46,9 @@ class CounterServiceTestCase(unittest.TestCase):
         self.assertEqual(2, curr2, "Third Call with New name match")
         self.assertEqual(3, resp3, "Third Call with New name match")
         self.assertEqual(3, curr3, "Third Call with New name match")
+
+    def close_connection(self):
+        self.service.es_client.close()
 
 
 if __name__ == '__main__':

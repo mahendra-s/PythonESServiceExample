@@ -7,30 +7,40 @@ from src.services.user_service.UserService import UserService
 
 
 class UserServiceTestCase(unittest.TestCase):
-    s1 = UserService('172.22.0.1', 9200)
+    service = UserService('172.22.0.1', 9200)
 
     def test_create_index(self):
         print(f"Creating Index")
-        result = self.s1.create_index_if_not_exist()
+        result = self.service.create_index_if_not_exist()
         print(f"Creating Index Done")
         self.assertEqual(True, result, "create index fail")
 
     def test_put_user(self):
         user = User(uuid.uuid4().hex, "Mahi", "Pune", "879797977")
-        result = self.s1.put_user(user)
+        result = self.service.put_user(user)
         self.assertEqual("created", result, "User Updated")
 
     def test_get_kiran(self):
-        result = self.s1.matching_name("kiran")
+        result = self.service.matching_name("kiran")
         user = {'id': 123, 'name': 'kiran', 'phone': '1231231231', 'address': 'Pune,MH'}
         self.assertEqual(user, result['hits']['hits'][0]['_source'], "First retrieved user does not match")
 
     def test_get_user_by_id(self):
-        result: Optional[User] = self.s1.get_user(123)
+        result: Optional[User] = self.service.get_user(123)
         user = {'id': 123, 'name': 'kiran', 'phone': '1231231231', 'address': 'Pune,MH'}
-        none_resp: Optional[User] = self.s1.get_user('NoUserId')
+        none_resp: Optional[User] = self.service.get_user('NoUserId')
         self.assertEqual(None, none_resp, "User Not Found")
         self.assertEqual(user, result.__dict__, "User Found")
+
+    def test_z_last(self):
+        try:
+            self.close_connection()
+        except:
+            self.assertFalse("Error Closing Connection")
+        self.assertTrue('Connection Closed')
+
+    def close_connection(self):
+        self.service.es_client.close()
 
 
 if __name__ == '__main__':

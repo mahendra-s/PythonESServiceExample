@@ -31,7 +31,11 @@ class ESAirflowServiceTestCase(unittest.TestCase):
 
     def test_zz_drop_index(self):
         response = self.service.drop_index()
+        self.close_connection()
         self.assertEqual(True, response, "Document populated by id")
+
+    def close_connection(self):
+        self.service.es_client.close()
 
 
 if __name__ == '__main__':
