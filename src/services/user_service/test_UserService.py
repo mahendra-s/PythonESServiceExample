@@ -2,8 +2,8 @@ import unittest
 import uuid
 from typing import Optional
 
-from UserService import UserService
 from src.services.User import User
+from src.services.user_service.UserService import UserService
 
 
 class UserServiceTestCase(unittest.TestCase):
