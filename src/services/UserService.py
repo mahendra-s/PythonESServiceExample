@@ -6,8 +6,8 @@ from User import User
 
 
 def as_user(dct):
-    print(f"debug dct type: {type(dct)}")
-    print(f"debug dct value: {dct}")
+    print(f"debug: dct type: {type(dct)}")
+    print(f"debug: dct value: {dct}")
     return User(dct['id'], dct['name'], dct['address'], dct['phone'])
 
 
@@ -76,7 +76,7 @@ class UserService:
         return None
 
     def put_user(self, user):
-        self.conn.request("GET", f"{self.index}/{self.dtype}/{user.id}"
+        self.conn.request("PUT", f"{self.index}/{self.dtype}/{user.id}"
                           , headers=self.headers
                           , body=json.dumps(user.__dict__))
         resp = self.conn.getresponse()
