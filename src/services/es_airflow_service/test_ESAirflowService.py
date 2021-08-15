@@ -1,10 +1,13 @@
 import unittest
 
+from src.services.ConfigService import app_config
 from src.services.es_airflow_service.ESAirflowService import ESAirflowService
 
 
 class ESAirflowServiceTestCase(unittest.TestCase):
-    service = ESAirflowService('172.22.0.1', 9200)
+    host = app_config['elasticsearch']['host']
+    port = app_config['elasticsearch']['port']
+    service = ESAirflowService(host, port)
     doc_id = 1001
 
     def test_1_create_index(self):

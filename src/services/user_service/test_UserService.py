@@ -2,12 +2,15 @@ import unittest
 import uuid
 from typing import Optional
 
+from src.services.ConfigService import app_config
 from src.services.User import User
 from src.services.user_service.UserService import UserService
 
 
 class UserServiceTestCase(unittest.TestCase):
-    service = UserService('172.22.0.1', 9200)
+    host = app_config['elasticsearch']['host']
+    port = app_config['elasticsearch']['port']
+    service = UserService(host, port)
 
     def test_create_index(self):
         print(f"Creating Index")

@@ -1,10 +1,13 @@
 import unittest
 
+from src.services.ConfigService import app_config
 from src.services.counter_service.CounterService import CounterService
 
 
 class CounterServiceTestCase(unittest.TestCase):
-    service = CounterService('172.22.0.1', 9200)
+    host = app_config['elasticsearch']['host']
+    port = app_config['elasticsearch']['port']
+    service = CounterService(host, port)
 
     def test_create_index(self):
         response = self.service.create_index_if_not_exist()
