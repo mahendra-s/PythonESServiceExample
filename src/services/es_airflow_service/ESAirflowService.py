@@ -1,7 +1,6 @@
 from datetime import date
 
-from elasticsearch import Elasticsearch
-from elasticsearch import RequestError
+from elasticsearch import Elasticsearch, RequestError
 
 
 class ESAirflowService:
@@ -10,7 +9,6 @@ class ESAirflowService:
         self.port = port
         self.es_client = Elasticsearch(hosts=[host])
         self.index = f'airflow_{str(date.today())}'
-        # self.index = f'airflow_2021-08-16'
         self.readIndex = 'airflow'
         self.dtype = '_doc'
         self.register_template()

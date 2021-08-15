@@ -1,4 +1,3 @@
-import http.client
 from datetime import date
 
 from elasticsearch import Elasticsearch, RequestError
@@ -16,7 +15,6 @@ class UserService:
         self.host = host
         self.port = port
         self.es_client = Elasticsearch(hosts=[host])
-        self.conn = http.client.HTTPConnection(host, port)
         self.headers = {"Content-type": "application/json"}
         self.index = f"user_{str(date.today())}"
         self.readIndex = "user"
